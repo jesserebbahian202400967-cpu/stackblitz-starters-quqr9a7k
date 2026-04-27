@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoTrack System</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrack System</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-  <body>
-    <header class="header">
-      <h1>♻ EcoTrack System</h1>
+<body>
 
-      <select onchange="setRole(this.value)">
-        <option value="user">User (Resident)</option>
-        <option value="collector">Collector</option>
-        <option value="admin">Admin</option>
-      </select>
-    </header>
+<header class="header">
+  <h1>♻ EcoTrack System</h1>
 
-    <nav class="nav">
-      <button onclick="showSection('schedule')">Schedules</button>
-      <button onclick="showSection('complaints')">Complaints</button>
-      <button onclick="showSection('notifications')">Notifications</button>
-    </nav>
+  <select onchange="setRole(this.value)">
+    <option value="user">User (Resident)</option>
+    <option value="admin">Admin</option>
+  </select>
+</header>
 
-    <!-- ================= SCHEDULE ================= -->
-    <section id="schedule" class="section active">
-      <h2>Schedules</h2>
+<nav class="nav">
+  <button onclick="showSection('schedule')">Schedules</button>
+  <button onclick="showSection('complaints')">Complaints</button>
+  <button onclick="showSection('notifications')">Notifications</button>
+</nav>
 
-      <div id="adminScheduleForm" style="display: none">
-        <input id="place" placeholder="Place" />
-        <input id="time" placeholder="Time" />
-        <input id="collector" placeholder="Collector" />
-        <button onclick="addSchedule()">Add Schedule</button>
-      </div>
+<!-- ================= SCHEDULE ================= -->
+<section id="schedule" class="section active">
+  <h2>Schedules</h2>
 
-      <div id="scheduleList"></div>
-    </section>
+  <div id="adminScheduleForm" style="display:none;">
+    <input id="place" placeholder="Place">
+    <input id="time" placeholder="Time">
+    <input id="collector" placeholder="Collector Name">
+    <button onclick="addSchedule()">Add Schedule</button>
+  </div>
 
-    <!-- ================= COMPLAINTS ================= -->
-    <section id="complaints" class="section">
-      <h2>Complaints</h2>
+  <div id="scheduleList"></div>
+</section>
 
-      <textarea id="complaintText" placeholder="Write complaint..."></textarea>
-      <button onclick="submitComplaint()">Submit</button>
+<!-- ================= COMPLAINTS ================= -->
+<section id="complaints" class="section">
+  <h2>Complaints</h2>
 
-      <div id="complaintList"></div>
-    </section>
+  <textarea id="complaintText" placeholder="Write complaint..."></textarea>
+  <button onclick="submitComplaint()">Submit</button>
 
-    <!-- ================= NOTIFICATIONS ================= -->
-    <section id="notifications" class="section">
-      <h2>Notifications</h2>
-      <div id="notificationList"></div>
-    </section>
+  <div id="complaintList"></div>
+</section>
 
-    <script src="script.js"></script>
-  </body>
+<!-- ================= NOTIFICATIONS ================= -->
+<section id="notifications" class="section">
+  <h2>Notifications</h2>
+  <div id="notificationList"></div>
+</section>
+
+<script src="script.js"></script>
+</body>
 </html>

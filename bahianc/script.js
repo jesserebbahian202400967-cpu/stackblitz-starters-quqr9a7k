@@ -1,12 +1,9 @@
 let role = "user";
 
-let schedules = [];
-let complaints = [];
-let notifications = [];
-
 /* ================= ROLE ================= */
 function setRole(r) {
   role = r;
+
   loadSchedules();
   loadComplaints();
   loadNotifications();
@@ -24,7 +21,7 @@ function showSection(section) {
 /* ================= SCHEDULE ================= */
 async function loadSchedules() {
   const res = await fetch("/api/schedules");
-  schedules = await res.json();
+  const schedules = await res.json();
 
   const list = document.getElementById("scheduleList");
   list.innerHTML = "";
@@ -36,15 +33,8 @@ async function loadSchedules() {
     div.innerHTML = `
       <h3>${s.place}</h3>
       <p>${s.time}</p>
-      <p>Collector: ${s.collector}</p>
       <strong>Status: ${s.status}</strong>
     `;
-
-    if (role === "collector") {
-      div.innerHTML += `
-        <button onclick="markDone(${s.id})">Mark Completed</button>
-      `;
-    }
 
     if (role === "admin") {
       div.innerHTML += `
@@ -59,11 +49,11 @@ async function loadSchedules() {
 async function addSchedule() {
   await fetch("/api/schedules", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      place: place.value,
-      time: time.value,
-      collector: collector.value
+      place: document.getElementById("place").value,
+      time: document.getElementById("time").value,
+      collector: document.getElementById("collector").value
     })
   });
 
@@ -75,31 +65,23 @@ async function deleteSchedule(id) {
   loadSchedules();
 }
 
-async function markDone(id) {
-  await fetch(`/api/schedules/${id}`, {
-    method: "PUT",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ status: "Completed" })
-  });
-
-  loadSchedules();
-}
-
 /* ================= COMPLAINTS ================= */
 async function submitComplaint() {
   await fetch("/api/complaints", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ text: complaintText.value })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      text: document.getElementById("complaintText").value
+    })
   });
 
-  complaintText.value = "";
+  document.getElementById("complaintText").value = "";
   loadComplaints();
 }
 
 async function loadComplaints() {
   const res = await fetch("/api/complaints");
-  complaints = await res.json();
+  const complaints = await res.json();
 
   const list = document.getElementById("complaintList");
   list.innerHTML = "";
@@ -118,6 +100,7 @@ async function loadComplaints() {
       div.innerHTML += `
         <button onclick="updateStatus(${c.id}, 'In Progress')">In Progress</button>
         <button onclick="updateStatus(${c.id}, 'Resolved')">Resolve</button>
+
         <input id="reply-${c.id}" placeholder="Reply">
         <button onclick="reply(${c.id})">Send</button>
       `;
@@ -130,7 +113,7 @@ async function loadComplaints() {
 async function updateStatus(id, status) {
   await fetch(`/api/complaints/${id}`, {
     method: "PUT",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status })
   });
 
@@ -142,7 +125,7 @@ async function reply(id) {
 
   await fetch(`/api/complaints/${id}`, {
     method: "PUT",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ response: msg })
   });
 
@@ -152,7 +135,7 @@ async function reply(id) {
 /* ================= NOTIFICATIONS ================= */
 async function loadNotifications() {
   const res = await fetch("/api/notifications");
-  notifications = await res.json();
+  const notifications = await res.json();
 
   const list = document.getElementById("notificationList");
   list.innerHTML = "";
